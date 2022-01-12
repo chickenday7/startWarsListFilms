@@ -2,15 +2,17 @@ import React, {useEffect} from "react";
 import {ListFilms} from "./ListFilms";
 import {connect} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
-import {DataFilmType, setDataFilmsTC} from "../redux/ListFilmsReducer";
+import {DataFilmType, setDataFilmsTC, setMovieDataListTC} from "../redux/ListFilmsReducer";
 import {StoreType} from "../redux/store";
 
 type ListFilmsContainerType = MapDispatchToProps & MapStateToProps
 const ListFilmsContainer = (props:ListFilmsContainerType) => {
   
-  useEffect(()=>{props.getDataFilms()},[])
+  useEffect(()=>{props.setDataFilms()},[])
 
-  return <ListFilms dataFilms={props.dataFilms} />
+  return <ListFilms dataFilms={props.dataFilms}
+                    setMovieDataList={props.setMovieDataList}
+  />
 }
 
 
@@ -24,13 +26,18 @@ let mapStateToProps = (store:StoreType):MapStateToProps => {
 }
 
 type MapDispatchToProps = {
-  getDataFilms: () => void
+  setDataFilms: () => void
+  setMovieDataList:(url:string)=>void
 }
 let mapDispatchToProps = (dispatch:ThunkDispatch<any, any, any>):MapDispatchToProps => {
   return {
-    getDataFilms: ()=>{
+    setDataFilms: ()=>{
       dispatch(setDataFilmsTC())
+    },
+    setMovieDataList:(url:string)=>{
+      dispatch(setMovieDataListTC(url))
     }
+
   }
 
 }

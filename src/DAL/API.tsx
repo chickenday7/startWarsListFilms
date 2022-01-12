@@ -16,7 +16,7 @@ export const getData = {
                 return res.data
             })
     },
-    getStarships(url:string){
+    getList(url:string){
       return axios.get(`${url}`)
           .then((res) =>{
               return res.data
